@@ -1,0 +1,24 @@
+body {
+    padding-top: 50px;
+    /* Margin bottom by footer height */
+    margin-bottom: 100px;
+}
+
+.container .text-muted {
+    margin: 20px 0;
+}
+
+.footer {
+    text-align: center;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 100px;
+}
+
+.scrollable-table {
+    height: 100px !important;
+    overflow: scroll;
+}
+
+​

@@ -1,0 +1,16 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:include="layout :: htmlhead" th:with="title='EliteBet | Auswertung'"></head>
+
+<body>
+<div th:replace="layout :: navbar">(navbar)</div>
+
+<div class="container">
+    <div class="page-header">
+        <h1>Gesamtauswertung</h1>
+    </div>
+</div>
+
+<div th:include="layout :: footer">(footer)</div>
+
+</body>
+</html>
