@@ -13,26 +13,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         // these matches will not go through the security filter (all above
         // static folder)
-        web.ignoring().antMatchers( "/css/**", "/fonts/**", "/images/**", "/js/**");
+        web.ignoring().antMatchers("/css/**", "/fonts/**", "/images/**", "/js/**");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/webjars/**","/static/**","/css/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-            .formLogin()
-                .loginPage("/login").defaultSuccessUrl("/").permitAll()
-                .and()
-            .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login").invalidateHttpSession(true).deleteCookies("JSESSIONID", "remember-me").permitAll();
+        http.authorizeRequests().antMatchers("/webjars/**", "/static/**", "/css/**").permitAll();
+        http.authorizeRequests().anyRequest().authenticated();
+        http.formLogin().loginPage("/login").defaultSuccessUrl("/").permitAll();
+        http.logout().logoutUrl("/logout").logoutSuccessUrl("/login").invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID", "remember-me").permitAll();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("pascal").password("pascal").roles("USER");
-        auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN");
+        auth.inMemoryAuthentication().withUser("pascal").password("pascal").roles("USER", "ADMIN");
+        auth.inMemoryAuthentication().withUser("julia").password("julia").roles("USER");
+        auth.inMemoryAuthentication().withUser("meike").password("meike").roles("USER");
+        auth.inMemoryAuthentication().withUser("joern").password("joern").roles("USER");
+        auth.inMemoryAuthentication().withUser("johannes").password("johannes").roles("USER");
     }
 }

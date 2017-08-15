@@ -6,8 +6,16 @@
 
 <div class="container">
     <div class="page-header">
-        <h1>Gesamtauswertung</h1>
+        <h1>Gesamtauswertung <span th:text="${teams.leagueCaption}"></span></h1>
     </div>
+    <table class="table table-condensed table-hover table-responsive">
+        <tr th:each="team,iter : ${teams.standing}">
+            <td th:text="${iter.count}" class="col-sm-1"></td>
+            <td class="col-sm-1"><img th:src="@{${team.crestURI}}" width="16px" /> </td>
+            <td th:text="${team.teamName}" class="col-sm-10"></td>
+        </tr>
+    </table>
+
 </div>
 
 <div th:include="layout :: footer">(footer)</div>
