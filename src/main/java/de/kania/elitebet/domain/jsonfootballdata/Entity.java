@@ -1,4 +1,4 @@
-package de.kania.elitebet.web.domain.jsonfootballdata;
+package de.kania.elitebet.domain.jsonfootballdata;
 
 import java.util.List;
 

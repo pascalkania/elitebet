@@ -11,8 +11,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class HomeController {
 
     @RequestMapping
-    public String handleIndexRequest(Model model) {
-        return "home";
+    public ModelAndView handleIndexRequest() {
+        ModelAndView model = new ModelAndView();
+        model.setViewName("redirect:/tipps");
+        return model;
     }
 
 }

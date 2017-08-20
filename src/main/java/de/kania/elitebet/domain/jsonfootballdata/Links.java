@@ -1,4 +1,4 @@
-package de.kania.elitebet.web.domain.jsonfootballdata;
+package de.kania.elitebet.domain.jsonfootballdata;
 /**
  * Author: pasca
  * Created by: ModelGenerator on 15.08.2017

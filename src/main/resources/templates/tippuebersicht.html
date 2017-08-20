@@ -1,0 +1,48 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:include="layout :: htmlhead" th:with="title='EliteBet | Tipps'"></head>
+
+<body>
+<div th:replace="layout :: navbar">(navbar)</div>
+
+<div class="container-fluid">
+    <div class="page-header">
+        <h1>Tippübersicht</h1>
+    </div>
+
+    <div class="alert alert-warning" th:if="${benutzertipp.isTippVorhanden() == false}">
+        <strong>Du hast noch nicht getippt. </strong><a th:href="@{/tipps/user}" class="alert-link">Hier gehts zur
+        Tippeingabe</a>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3" th:each="entry : ${alleBenutzerTipps}">
+            <div class="panel panel-warning">
+                <div class="panel-heading">Tipp: <span
+                        th:text="${#strings.capitalizeWords(entry.benutzerTipp.name)}"></span> </div>
+                <div class="panel-body">
+                    <table class="table table-condensed table-hover table-responsive" th:object="${entry.benutzerTipp}">
+                        <thead>
+                        <tr>
+                            <th>Platz</th>
+                            <th>Teamname</th>
+                            <th>Δ</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="tipp : *{tippliste}">
+                                <td th:text="${tipp.key}"></td>
+                                <td th:text="${tipp.value}"></td>
+                                <td th:text="${entry.aktuelleBenutzerDifferenzMap.get(tipp.value)}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:include="layout :: footer">(footer)</div>
+
+</body>
+</html>
