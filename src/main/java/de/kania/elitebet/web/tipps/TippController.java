@@ -1,6 +1,7 @@
 package de.kania.elitebet.web.tipps;
 
 import de.kania.elitebet.domain.BenutzerTipp;
+import de.kania.elitebet.domain.jsonfootballdata.Entity;
 import de.kania.elitebet.service.FootballDataService;
 import de.kania.elitebet.service.BenutzerTippService;
 import org.apache.commons.logging.Log;
@@ -38,6 +39,12 @@ public class TippController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return benutzerTippService.holeBenutzerTipp(authentication.getName());
     }
+
+    @ModelAttribute("ligadaten")
+    public Entity holeLigadaten(){
+        return footballDataService.holeAktuelleTabellenDaten();
+    }
+
 
     @ModelAttribute("alleBenutzerTipps")
     public List<BenutzerTippAO> leseAlleBenutzerTipps() {

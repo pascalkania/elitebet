@@ -1,7 +1,9 @@
 package de.kania.elitebet.web.auswertung;
 
 import de.kania.elitebet.database.BenutzerRepository;
+import de.kania.elitebet.domain.BenutzerAuswertung;
 import de.kania.elitebet.domain.jsonfootballdata.Entity;
+import de.kania.elitebet.service.AuswertungService;
 import de.kania.elitebet.service.FootballDataService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -17,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -29,12 +32,20 @@ public class AuswertungController {
     @Autowired
     private FootballDataService footballDataService;
 
+    @Autowired
+    private AuswertungService auswertungService;
+
     private static final Log LOGGER = LogFactory.getLog(AuswertungController.class);
 
     @RequestMapping
     public String handleIndexRequest(Model model) {
         Map<String, Integer> aktuelleTabellenplatzMap = footballDataService.holeAktuelleTabellenplatzMap();
         model.addAttribute("teams", aktuelleTabellenplatzMap);
+
+        List<BenutzerAuswertung> auswertungList = auswertungService.berechneAuswertungsliste();
+
+        Map<Integer,BenutzerAuswertung> rankingMap = auswertungService.berechneRankingMap(auswertungList);
+        model.addAttribute("rankingmap",rankingMap);
         return "auswertung";
     }
 }

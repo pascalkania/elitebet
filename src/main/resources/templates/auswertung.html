@@ -9,36 +9,34 @@
         <h1>Gesamtauswertung</h1>
     </div>
 
-    <div class="panel panel-warning">
+    <div class="panel panel-success">
         <div class="panel-heading">Wochenauswertung</div>
         <div class="panel-body">
             <table class="table table-condensed table-hover table-responsive">
+                <thead>
                 <tr>
-                    <td>1</td>
-                    <td>Meike</td>
+                    <th>Platz</th>
+                    <th>Name</th>
+                    <th>Σ</th>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Jörn</td>
+                </thead>
+                <tbody>
+                <tr th:each="entry : ${rankingmap}">
+                    <td th:text="${entry.key}" class="col-sm-1"></td>
+                    <td th:text="${#strings.capitalizeWords(entry.value.name)}" class="col-sm-1"></td>
+                    <td th:text="${entry.value.punktzahl}" class="col-sm-10"></td>
                 </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Johannes</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>Julia</td>
-                </tr>
+                </tbody>
             </table>
         </div>
     </div>
-    <div class="panel panel-default">
+    <div class="panel panel-primary">
         <div class="panel-heading">Aktuelle Tabelle</div>
         <div class="panel-body">
             <table class="table table-condensed table-hover table-responsive">
                 <tr th:each="team : ${teams}">
                     <td th:text="${team.value}" class="col-sm-1"></td>
-                    <td th:text="${team.key}" class="col-sm-10"></td>
+                    <td th:text="${team.key}" class="col-sm-11"></td>
                 </tr>
             </table>
         </div>

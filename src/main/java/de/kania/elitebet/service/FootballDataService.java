@@ -1,7 +1,6 @@
 package de.kania.elitebet.service;
 
 import de.kania.elitebet.domain.jsonfootballdata.Entity;
-import de.kania.elitebet.domain.jsonfootballdata.StandingItem;
 import de.kania.elitebet.properties.FootballDataProperties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,8 +14,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.crypto.KeyGenerator;
-import java.util.*;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -50,16 +51,18 @@ public class FootballDataService {
         LOGGER.info("hole aktuelle Tabellendaten");
         return response.getBody();
     }
+
     @Cacheable("teamlist")
-    public List<String> holeTeamliste(){
+    public List<String> holeTeamliste() {
         LOGGER.info("hole TeamListe");
         return holeAktuelleTabellenDaten().standing.stream().map(e -> e.teamName).collect(Collectors.toList());
     }
 
+
     @Cacheable("aktuelleTabllenplatzMap")
-    public Map<String,Integer> holeAktuelleTabellenplatzMap(){
+    public Map<String, Integer> holeAktuelleTabellenplatzMap() {
         return holeAktuelleTabellenDaten().standing.stream().collect(Collectors.toMap(e -> e.teamName, e -> e
-                .position)).entrySet().stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toMap(e->e
-                .getKey(), e->e.getValue(), (v1, v2) -> v1,LinkedHashMap::new));
+                .position)).entrySet().stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toMap(e -> (e)
+                .getKey(), (e) -> e.getValue(), (v1, v2) -> v1, LinkedHashMap::new));
     }
 }

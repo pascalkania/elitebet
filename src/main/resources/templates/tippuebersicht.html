@@ -7,7 +7,9 @@
 <div class="container-fluid">
     <div class="page-header">
         <h1>Tippübersicht</h1>
+        <p class="lead" th:text="${ligadaten.leagueCaption} + ' - ' + ${ligadaten.matchday} +'. Spieltag'"></p>
     </div>
+
 
     <div class="alert alert-warning" th:if="${benutzertipp.isTippVorhanden() == false}">
         <strong>Du hast noch nicht getippt. </strong><a th:href="@{/tipps/user}" class="alert-link">Hier gehts zur
@@ -29,8 +31,9 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="tipp : *{tippliste}">
-                                <td th:text="${tipp.key}"></td>
+                            <tr th:each="tipp : *{tippliste}"
+                                th:class="${entry.aktuelleBenutzerDifferenzMap.get(tipp.value)} == 0 ? success">
+                                <td><strong><span th:text="${tipp.key}"></span></strong></td>
                                 <td th:text="${tipp.value}"></td>
                                 <td th:text="${entry.aktuelleBenutzerDifferenzMap.get(tipp.value)}"></td>
                             </tr>
