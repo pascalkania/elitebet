@@ -21,11 +21,16 @@ public class AuswertungService {
     @Autowired
     private BenutzerTippService benutzerTippService;
 
-    public List<BenutzerAuswertung> berechneAuswertungsliste(){
+    @Autowired
+    private FootballDataService footballDataService;
+
+    public List<BenutzerAuswertung> berechneAuswertungslisteFuerAlleBenutzer(){
         List<BenutzerTipp> benutzerTipps = benutzerTippService.holeAlleBenutzerTipps();
+
         List<BenutzerAuswertung> auswertungList = new ArrayList<>();
         for (BenutzerTipp benutzerTipp: benutzerTipps) {
-            Map<String, Integer> differenzMapFuerBenutzer = benutzerTippService.berechneAktuelleDifferenzMapFuerBenutzer(benutzerTipp.getName());
+            Map<String, Integer> differenzMapFuerBenutzer = benutzerTippService
+                    .berechneAktuelleDifferenzMapFuerBenutzer(benutzerTipp.getName());
             int punkte = differenzMapFuerBenutzer.values().stream().mapToInt(Integer::intValue).sum();
             BenutzerAuswertung benutzerAuswertung = new BenutzerAuswertung(benutzerTipp.getName(),punkte);
             auswertungList.add(benutzerAuswertung);
@@ -33,7 +38,8 @@ public class AuswertungService {
         return auswertungList;
     }
 
-    public Map<Integer, BenutzerAuswertung> berechneRankingMap(List<BenutzerAuswertung> auswertungList) {
+    public Map<Integer, BenutzerAuswertung> berechneRankingMap() {
+        List<BenutzerAuswertung> auswertungList = berechneAuswertungslisteFuerAlleBenutzer();
         List<BenutzerAuswertung> collect = auswertungList.stream().sorted((a, b) -> a.getPunktzahl() - b.getPunktzahl()).collect(Collectors.toList());
         Map<Integer,BenutzerAuswertung> rankingmap = new TreeMap<>();
         IntStream.range(0,collect.size()).forEach(i -> rankingmap.put(i+1,collect.get(i)));
