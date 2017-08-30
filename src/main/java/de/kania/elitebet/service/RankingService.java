@@ -15,8 +15,9 @@ import java.util.Map;
 @Service
 public class RankingService {
     private static final Log LOGGER = LogFactory.getLog(RankingService.class);
+
     @Autowired
-    RankingRepository rankingRepository;
+    private RankingRepository rankingRepository;
 
 
     public void speicherRankingZuSpieltag(String spieltag, Map<Integer, BenutzerAuswertung> rankingMap) {
