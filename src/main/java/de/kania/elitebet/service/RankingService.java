@@ -2,14 +2,12 @@ package de.kania.elitebet.service;
 
 import de.kania.elitebet.database.RankingRepository;
 import de.kania.elitebet.domain.BenutzerAuswertung;
-import de.kania.elitebet.domain.Ranking;
+import de.kania.elitebet.database.Ranking;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.expression.Maps;
 
-import java.util.Collections;
 import java.util.Map;
 
 @Service

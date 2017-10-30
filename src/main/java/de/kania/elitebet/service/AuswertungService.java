@@ -1,7 +1,7 @@
 package de.kania.elitebet.service;
 
 import de.kania.elitebet.domain.BenutzerAuswertung;
-import de.kania.elitebet.domain.BenutzerTipp;
+import de.kania.elitebet.database.BenutzerTipp;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;

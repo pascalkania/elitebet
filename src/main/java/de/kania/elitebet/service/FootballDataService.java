@@ -1,6 +1,8 @@
 package de.kania.elitebet.service;
 
+import de.kania.elitebet.domain.Teamdaten;
 import de.kania.elitebet.domain.jsonfootballdata.Entity;
+import de.kania.elitebet.domain.jsonfootballdata.StandingItem;
 import de.kania.elitebet.properties.FootballDataProperties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -62,9 +64,22 @@ public class FootballDataService {
 
 
     @Cacheable(AKTUELLE_TABLLENPLATZ_MAP)
-    public Map<String, Integer> holeAktuelleTabellenplatzMap() {
-        return holeAktuelleTabellenDaten().standing.stream().collect(Collectors.toMap(e -> e.teamName, e -> e
-                .position)).entrySet().stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toMap((e) -> e
-                .getKey(), (e) -> e.getValue(), (v1, v2) -> v1, LinkedHashMap::new));
+    public Map<String, Teamdaten> holeAktuelleTabellenplatzMap() {
+        return holeAktuelleTabellenDaten().standing.stream().map(t -> mappeStandingItemTOTeamdaten(t)).collect
+                (Collectors.toMap((e) -> e.getName(), (e)-> e, (v1,v2) -> v1, LinkedHashMap::new));
+
+//        return holeAktuelleTabellenDaten().standing.stream().collect(Collectors.toMap(e -> e.teamName, e -> e
+//                .position)).entrySet().stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toMap((e) -> e
+//                .getKey(), (e) -> e.getValue(), (v1, v2) -> v1, LinkedHashMap::new));
+    }
+
+    private Teamdaten mappeStandingItemTOTeamdaten(StandingItem item) {
+        Teamdaten team = new Teamdaten();
+        team.setName(item.teamName);
+        team.setPosition(item.position);
+        team.setGespielteSpiele(item.playedGames);
+        team.setPunkte(item.points);
+        return team;
+
     }
 }

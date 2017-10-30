@@ -1,6 +1,6 @@
 package de.kania.elitebet.web.tipps;
 
-import de.kania.elitebet.domain.BenutzerTipp;
+import de.kania.elitebet.database.BenutzerTipp;
 
 import java.util.Map;
 

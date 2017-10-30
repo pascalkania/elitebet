@@ -10,7 +10,7 @@
     </div>
 
     <div class="panel panel-success">
-        <div class="panel-heading">Wochenauswertung</div>
+        <div class="panel-heading">Wochenauswertung <span th:text="${spieltag}"></span>. Spieltag</div>
         <div class="panel-body">
             <table class="table table-condensed table-hover table-responsive">
                 <thead>
@@ -34,10 +34,22 @@
         <div class="panel-heading">Aktuelle Tabelle</div>
         <div class="panel-body">
             <table class="table table-condensed table-hover table-responsive">
-                <tr th:each="team : ${teams}">
-                    <td th:text="${team.value}" class="col-sm-1"></td>
-                    <td th:text="${team.key}" class="col-sm-11"></td>
+                <thead>
+                <tr>
+                    <th>Platz</th>
+                    <th>Name</th>
+                    <th>Spiele</th>
+                    <th>Σ</th>
                 </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="team : ${teams}">
+                        <td th:text="${team.value.position}" class="col-sm-1"></td>
+                        <td th:text="${team.key}" class="col-sm-9"></td>
+                        <td th:text="${team.value.gespielteSpiele}" class="col-sm-1"></td>
+                        <td th:text="${team.value.punkte}" class="col-sm-1"></td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>

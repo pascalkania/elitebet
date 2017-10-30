@@ -1,6 +1,6 @@
 package de.kania.elitebet.web.tipps;
 
-import de.kania.elitebet.domain.BenutzerTipp;
+import de.kania.elitebet.database.BenutzerTipp;
 import de.kania.elitebet.domain.jsonfootballdata.Entity;
 import de.kania.elitebet.service.FootballDataService;
 import de.kania.elitebet.service.BenutzerTippService;
@@ -17,9 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @Controller

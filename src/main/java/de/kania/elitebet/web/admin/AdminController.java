@@ -1,6 +1,6 @@
 package de.kania.elitebet.web.admin;
 
-import de.kania.elitebet.domain.BenutzerTipp;
+import de.kania.elitebet.database.BenutzerTipp;
 import de.kania.elitebet.service.BenutzerTippService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.security.RolesAllowed;

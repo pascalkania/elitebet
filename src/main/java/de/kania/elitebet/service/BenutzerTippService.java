@@ -1,7 +1,8 @@
 package de.kania.elitebet.service;
 
 import de.kania.elitebet.database.BenutzerRepository;
-import de.kania.elitebet.domain.BenutzerTipp;
+import de.kania.elitebet.database.BenutzerTipp;
+import de.kania.elitebet.domain.Teamdaten;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class BenutzerTippService {
@@ -48,13 +48,14 @@ public class BenutzerTippService {
     }
 
     public Map<String,Integer> berechneAktuelleDifferenzMapFuerBenutzer(String username){
-        Map<String, Integer> aktuelleTabellenplatzMap = footballDataService.holeAktuelleTabellenplatzMap();
+        Map<String, Teamdaten> aktuelleTabellenplatzMap = footballDataService.holeAktuelleTabellenplatzMap();
         BenutzerTipp benutzerTipp = holeBenutzerTipp(username);
         Map<Integer, String> benutzerTippMap = benutzerTipp.getTippliste();
 
         Map<String, Integer> differenzMap = new HashMap<>();
         for (Map.Entry<Integer, String> e : benutzerTippMap.entrySet()) {
-            Integer platz = aktuelleTabellenplatzMap.get(e.getValue());
+            Teamdaten teamdaten = aktuelleTabellenplatzMap.get(e.getValue());
+            Integer platz = teamdaten.getPosition();
             Integer tippPosition = e.getKey();
             Integer absoluteDifferenz = Math.abs(platz-tippPosition);
             differenzMap.put(e.getValue(),absoluteDifferenz);

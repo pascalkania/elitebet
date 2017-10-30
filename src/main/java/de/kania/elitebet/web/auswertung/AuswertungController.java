@@ -2,6 +2,7 @@ package de.kania.elitebet.web.auswertung;
 
 import de.kania.elitebet.database.BenutzerRepository;
 import de.kania.elitebet.domain.BenutzerAuswertung;
+import de.kania.elitebet.domain.Teamdaten;
 import de.kania.elitebet.domain.jsonfootballdata.Entity;
 import de.kania.elitebet.service.AuswertungService;
 import de.kania.elitebet.service.FootballDataService;
@@ -36,11 +37,12 @@ public class AuswertungController {
 
     @RequestMapping
     public String handleIndexRequest(Model model) {
-        Map<String, Integer> aktuelleTabellenplatzMap = footballDataService.holeAktuelleTabellenplatzMap();
+        Map<String, Teamdaten> aktuelleTabellenplatzMap = footballDataService.holeAktuelleTabellenplatzMap();
         model.addAttribute("teams", aktuelleTabellenplatzMap);
         Map<Integer,BenutzerAuswertung> rankingMap = auswertungService.berechneRankingMap();
         model.addAttribute("rankingmap",rankingMap);
         String matchday = holeSpielTag();
+        model.addAttribute("spieltag",matchday);
         rankingService.speicherRankingZuSpieltag(matchday, rankingMap);
         return "auswertung";
     }
