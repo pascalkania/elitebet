@@ -42,9 +42,12 @@ public class BenutzerTippService {
 
     @Transactional
     public void tippFreigebenFuerBenutzerId(String benutzerId) {
-        BenutzerTipp benutzer = benutzerRepository.findOne(benutzerId);
-        benutzer.setTippVorhanden(false);
-        benutzerRepository.save(benutzer);
+        Optional<BenutzerTipp> benutzer = benutzerRepository.findById(benutzerId);
+        if(benutzer.isPresent()){
+            BenutzerTipp benutzerTipp = benutzer.get();
+            benutzerTipp.setTippVorhanden(false);
+            benutzerRepository.save(benutzerTipp);
+        }
     }
 
     public Map<String,Integer> berechneAktuelleDifferenzMapFuerBenutzer(String username){

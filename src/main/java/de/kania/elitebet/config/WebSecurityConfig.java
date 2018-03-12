@@ -5,6 +5,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -17,7 +19,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+        protected void configure (HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/webjars/**", "/static/**", "/css/**").permitAll();
         http.authorizeRequests().anyRequest().authenticated();
         http.formLogin().loginPage("/login").defaultSuccessUrl("/").permitAll();
@@ -27,11 +29,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("pascal").password("pascal").roles("USER", "ADMIN");
-        auth.inMemoryAuthentication().withUser("julia").password("julia").roles("USER");
-        auth.inMemoryAuthentication().withUser("meike").password("meike").roles("USER");
-        auth.inMemoryAuthentication().withUser("jörn").password("jörn").roles("USER");
-        auth.inMemoryAuthentication().withUser("johannes").password("johannes").roles("USER");
-        auth.inMemoryAuthentication().withUser("tilmann").password("tilmann").roles("USER");
+        auth.inMemoryAuthentication().withUser(User.withDefaultPasswordEncoder().username("pascal").password
+                ("pascal").roles("USER", "ADMIN").build());
+        auth.inMemoryAuthentication().withUser(User.withDefaultPasswordEncoder().username("julia").password
+                ("julia").roles("USER").build());
+        auth.inMemoryAuthentication().withUser(User.withDefaultPasswordEncoder().username("meike").password
+                ("meike").roles("USER").build());
+        auth.inMemoryAuthentication().withUser(User.withDefaultPasswordEncoder().username("jörn").password
+                ("jörn").roles("USER").build());
+        auth.inMemoryAuthentication().withUser(User.withDefaultPasswordEncoder().username("johannes").password
+                ("johannes").roles("USER").build());
+        auth.inMemoryAuthentication().withUser(User.withDefaultPasswordEncoder().username("tilmann").password
+                ("tilmann").roles("USER").build());
     }
 }
