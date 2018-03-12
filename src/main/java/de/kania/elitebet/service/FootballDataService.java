@@ -26,8 +26,6 @@ import java.util.stream.Collectors;
 public class FootballDataService {
 
     private static final Log LOGGER = LogFactory.getLog(FootballDataService.class);
-    public static final String TEAMLIST = "teamlist";
-    public static final String AKTUELLE_TABLLENPLATZ_MAP = "aktuelleTabllenplatzMap";
 
     @Autowired
     private FootballDataProperties footballDataProperties;
@@ -56,21 +54,17 @@ public class FootballDataService {
         return response.getBody();
     }
 
-    @Cacheable(TEAMLIST)
+    @Cacheable(CacheNames.TEAMLIST)
     public List<String> holeTeamliste() {
         LOGGER.info("hole TeamListe");
         return holeAktuelleTabellenDaten().standing.stream().map(e -> e.teamName).collect(Collectors.toList());
     }
 
 
-    @Cacheable(AKTUELLE_TABLLENPLATZ_MAP)
+    @Cacheable(CacheNames.AKTUELLE_TABLLENPLATZ_MAP)
     public Map<String, Teamdaten> holeAktuelleTabellenplatzMap() {
         return holeAktuelleTabellenDaten().standing.stream().map(t -> mappeStandingItemTOTeamdaten(t)).collect
-                (Collectors.toMap((e) -> e.getName(), (e)-> e, (v1,v2) -> v1, LinkedHashMap::new));
-
-//        return holeAktuelleTabellenDaten().standing.stream().collect(Collectors.toMap(e -> e.teamName, e -> e
-//                .position)).entrySet().stream().sorted(Map.Entry.comparingByValue()).collect(Collectors.toMap((e) -> e
-//                .getKey(), (e) -> e.getValue(), (v1, v2) -> v1, LinkedHashMap::new));
+                (Collectors.toMap((Teamdaten e) -> e.getName(), (e)-> e, (v1,v2) -> v1, LinkedHashMap::new));
     }
 
     private Teamdaten mappeStandingItemTOTeamdaten(StandingItem item) {
@@ -80,6 +74,5 @@ public class FootballDataService {
         team.setGespielteSpiele(item.playedGames);
         team.setPunkte(item.points);
         return team;
-
     }
 }

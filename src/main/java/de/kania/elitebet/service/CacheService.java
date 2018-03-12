@@ -15,7 +15,7 @@ public class CacheService {
     private static final Log LOGGER = LogFactory.getLog(CacheService.class);
 
     @Scheduled(cron = "0 0 */6 * * *")
-    @CacheEvict(cacheNames = {FootballDataService.TEAMLIST, FootballDataService.AKTUELLE_TABLLENPLATZ_MAP})
+    @CacheEvict(cacheNames = {CacheNames.TEAMLIST, CacheNames.AKTUELLE_TABLLENPLATZ_MAP})
     public void resetCaches(){
         LOGGER.info("Cache leeren");
     }
