@@ -1,12 +1,19 @@
 package de.kania.elitebet.config;
 
+import org.springframework.boot.autoconfigure.couchbase.CouchbaseProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import javax.websocket.server.ServerEndpoint;
 
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -29,17 +36,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser(User.withDefaultPasswordEncoder().username("pascal").password
-                ("pascal").roles("USER", "ADMIN").build());
-        auth.inMemoryAuthentication().withUser(User.withDefaultPasswordEncoder().username("julia").password
-                ("julia").roles("USER").build());
-        auth.inMemoryAuthentication().withUser(User.withDefaultPasswordEncoder().username("meike").password
-                ("meike").roles("USER").build());
-        auth.inMemoryAuthentication().withUser(User.withDefaultPasswordEncoder().username("jörn").password
-                ("jörn").roles("USER").build());
-        auth.inMemoryAuthentication().withUser(User.withDefaultPasswordEncoder().username("johannes").password
-                ("johannes").roles("USER").build());
-        auth.inMemoryAuthentication().withUser(User.withDefaultPasswordEncoder().username("tilmann").password
-                ("tilmann").roles("USER").build());
+        PasswordEncoder delegatingPasswordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        auth.inMemoryAuthentication().withUser(User.withUsername("pascal").password
+                ("pascal").roles("USER", "ADMIN").passwordEncoder(delegatingPasswordEncoder::encode).build());
+        auth.inMemoryAuthentication().withUser(User.withUsername("julia").password
+                ("julia").roles("USER").passwordEncoder(delegatingPasswordEncoder::encode).build());
+        auth.inMemoryAuthentication().withUser(User.withUsername("meike").password
+                ("meike").roles("USER").passwordEncoder(delegatingPasswordEncoder::encode).build());
+        auth.inMemoryAuthentication().withUser(User.withUsername("jörn").password
+                ("jörn").roles("USER").passwordEncoder(delegatingPasswordEncoder::encode).build());
+        auth.inMemoryAuthentication().withUser(User.withUsername("johannes").password
+                ("johannes").roles("USER").passwordEncoder(delegatingPasswordEncoder::encode).build());
+        auth.inMemoryAuthentication().withUser(User.withUsername("tilmann").password
+                ("tilmann").roles("USER").passwordEncoder(delegatingPasswordEncoder::encode).build());
     }
+
 }
